@@ -22,6 +22,7 @@ def main() -> None:
     ap.add_argument("--claude-dir", default=None, help="override ~/.claude")
     ap.add_argument("--codex-dir", default=None, help="override ~/.codex")
     args = ap.parse_args()
+    args.out = os.path.expanduser(args.out)  # launchd does no shell expansion of a literal ~
 
     stats = {
         "generatedAt": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
