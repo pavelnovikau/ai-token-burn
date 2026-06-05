@@ -121,8 +121,8 @@ h1 { font-size: 26px; font-weight: 800; letter-spacing: .5px; margin: 0; }
 
 /* heatmap --------------------------------------------------------------- */
 .heatmap-scroll { overflow-x: auto; padding-bottom: 4px; }
-.heatmap { display: grid; grid-auto-flow: column; grid-template-rows: auto repeat(7, 13px); gap: 3px; width: max-content; }
-.heatmap .mlabel { font-size: 10px; color: var(--faint); height: 14px; }
+.heatmap { display: grid; grid-auto-flow: column; grid-auto-columns: 13px; grid-template-rows: auto repeat(7, 13px); gap: 3px; width: max-content; }
+.heatmap .mlabel { font-size: 10px; color: var(--faint); height: 14px; white-space: nowrap; overflow: visible; }
 .heatmap .cell { width: 13px; height: 13px; border-radius: 3px; background: var(--empty); }
 .cell.lvl-1 { background: var(--l1); } .cell.lvl-2 { background: var(--l2); }
 .cell.lvl-3 { background: var(--l3); } .cell.lvl-4 { background: var(--l4); }

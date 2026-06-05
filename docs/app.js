@@ -45,10 +45,24 @@ function fmtDate(s, withDow) {
 }
 
 /* ---- windowing --------------------------------------------------------- */
+// "Now" in the daily-date (local) frame = the latest active day across BOTH
+// tools. Window cutoffs and the windowed current-streak anchor to this, so
+// "last 7 days" means the last 7 calendar days rather than 7 days ending on this
+// tool's last active day. Staying in the engine's local-date frame avoids the
+// UTC/local skew that anchoring to generatedAt would introduce.
+function nowAnchor() {
+  let mx = '';
+  for (const t of ['claude', 'codex']) {
+    const d = DATA[t].daily;
+    if (d.length && d[d.length - 1].date > mx) mx = d[d.length - 1].date;
+  }
+  return mx;
+}
+
 function windowedDaily(tool) {
   const daily = DATA[tool].daily;
   if (!daily.length || state.window === 'all') return daily;
-  const anchor = daily[daily.length - 1].date;
+  const anchor = nowAnchor() || daily[daily.length - 1].date;
   const span = state.window === '7d' ? 7 : 30;
   const cutoff = addDays(parseDay(anchor), -(span - 1));
   return daily.filter(d => parseDay(d.date) >= cutoff);
@@ -81,7 +95,7 @@ function computeMetrics(tool) {
   const allWindow = state.window === 'all';
   const streaks = allWindow
     ? { cur: ov.currentStreak, longest: ov.longestStreak }
-    : computeStreaks(wd.map(d => d.date), wd.length ? wd[wd.length - 1].date : iso(new Date()));
+    : computeStreaks(wd.map(d => d.date), nowAnchor() || (wd.length ? wd[wd.length - 1].date : ''));
   const hasSub = tool === 'claude' && !!DATA.claude.subagents;
   const showSub = hasSub && state.subagents;
   return {
@@ -94,8 +108,8 @@ function computeMetrics(tool) {
     peakHour: ov.peakHour,
     favorite: fav,
     subTok: m.subTok, subSess: m.subSess, subMsg: m.subMsg,
-    first: wd.length ? wd[0].date : ov.firstSessionDate.slice(0, 10),
-    last: wd.length ? wd[wd.length - 1].date : ov.lastSessionDate.slice(0, 10),
+    first: wd.length ? wd[0].date : (ov.firstSessionDate || '').slice(0, 10),
+    last: wd.length ? wd[wd.length - 1].date : (ov.lastSessionDate || '').slice(0, 10),
   };
 }
 
@@ -145,22 +159,29 @@ function renderHeatmap(M) {
   $('#heatmap-sub').textContent = `${humanTokens(M.tokens)} tokens · ${M.activeDays} active days`;
 
   const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  // Month labels: one per month present, at that month's first column. Drop a
-  // partial leading month only if it would crowd the next label; keep a 2-column
-  // min gap so labels never overlap. (Handles short ranges like the 6-week Claude
-  // span, where the old "column starts in days 1-7" rule labelled only May.)
-  const monthStarts = [];
-  for (let w = 0, seen = -1; w < nWeeks; w++) {
-    const m = addDays(firstSun, w * 7).getUTCMonth();
-    if (m !== seen) { monthStarts.push([w, m]); seen = m; }
+  // Label each month at the first column that actually contains a day of that
+  // month (handles mid-week month starts and trailing partial months — the old
+  // "month of the Sunday column" rule labelled one column late and dropped a
+  // trailing partial month). Drop a leading month only if it would crowd the
+  // next; keep a 2-column min gap so labels never overlap.
+  const firstColOfMonth = new Map();
+  for (let w = 0; w < nWeeks; w++) {
+    for (let row = 0; row < 7; row++) {
+      const ds = iso(addDays(firstSun, w * 7 + row));
+      if (dayDiff(ds, first) < 0 || dayDiff(ds, last) > 0) continue;
+      const d = parseDay(ds);
+      const key = d.getUTCFullYear() * 12 + d.getUTCMonth();
+      if (!firstColOfMonth.has(key)) firstColOfMonth.set(key, w);
+    }
   }
+  const monthEntries = [...firstColOfMonth.entries()].sort((a, b) => a[1] - b[1]);
   const labelAt = {};
-  for (let i = 0, lastPlaced = -99; i < monthStarts.length; i++) {
-    const [w, m] = monthStarts[i];
-    const nxt = i + 1 < monthStarts.length ? monthStarts[i + 1][0] : nWeeks;
-    if (w === 0 && nxt < 2) continue;     // partial leading month crowds the next
+  for (let i = 0, lastPlaced = -99; i < monthEntries.length; i++) {
+    const [key, w] = monthEntries[i];
+    const nxt = i + 1 < monthEntries.length ? monthEntries[i + 1][1] : nWeeks;
+    if (i === 0 && nxt - w < 2) continue; // leading month crowds the next label
     if (w - lastPlaced < 2) continue;     // too close to the previous label
-    labelAt[w] = MONTHS[m];
+    labelAt[w] = MONTHS[key % 12];
     lastPlaced = w;
   }
   for (let w = 0; w < nWeeks; w++) {
@@ -301,10 +322,12 @@ function render() {
   } else {
     renderModels(tool, M);
   }
-  $('#foot-range').textContent =
-    `${prettyTool(tool)}: ${fmtDate(DATA[tool].overview.firstSessionDate.slice(0,10))} `
-    + `${parseDay(DATA[tool].overview.firstSessionDate.slice(0,10)).getUTCFullYear()} → `
-    + `${fmtDate(DATA[tool].overview.lastSessionDate.slice(0,10))} · ${windowLabel()}`;
+  const ov = DATA[tool].overview;
+  const fsd = (ov.firstSessionDate || '').slice(0, 10);
+  const lsd = (ov.lastSessionDate || '').slice(0, 10);
+  $('#foot-range').textContent = fsd
+    ? `${prettyTool(tool)}: ${fmtDate(fsd)} ${parseDay(fsd).getUTCFullYear()} → ${fmtDate(lsd)} · ${windowLabel()}`
+    : `${prettyTool(tool)}: no usage recorded`;
 }
 const prettyTool = t => t === 'claude' ? 'Claude Code' : 'Codex';
 

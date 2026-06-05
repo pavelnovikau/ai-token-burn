@@ -27,8 +27,9 @@
 <line x1="568.0" y1="152" x2="568.0" y2="186" stroke="#d8dee4" opacity="0.7"/>
 <text x="70.0" y="218.0" font-size="9.5" fill="#8c959f">Feb</text>
 <text x="126.0" y="218.0" font-size="9.5" fill="#8c959f">Mar</text>
-<text x="196.0" y="218.0" font-size="9.5" fill="#8c959f">Apr</text>
-<text x="252.0" y="218.0" font-size="9.5" fill="#8c959f">May</text>
+<text x="182.0" y="218.0" font-size="9.5" fill="#8c959f">Apr</text>
+<text x="238.0" y="218.0" font-size="9.5" fill="#8c959f">May</text>
+<text x="308.0" y="218.0" font-size="9.5" fill="#8c959f">Jun</text>
 <text x="50.0" y="247.0" font-size="9" fill="#8c959f" text-anchor="end">Mon</text>
 <text x="50.0" y="275.0" font-size="9" fill="#8c959f" text-anchor="end">Wed</text>
 <text x="50.0" y="303.0" font-size="9" fill="#8c959f" text-anchor="end">Fri</text>

@@ -16,7 +16,9 @@ python3 render_hero.py     # writes assets/overview-{light,dark}.svg
 # Only the generated artifacts — never working notes or stray files.
 FILES=(data/stats.json docs/data/stats.json assets/overview-light.svg assets/overview-dark.svg)
 
-if git diff --quiet -- "${FILES[@]}"; then
+# Compare against HEAD (not just the working tree) so a prior run that staged
+# but didn't commit is still detected.
+if git diff --quiet HEAD -- "${FILES[@]}"; then
   echo "publish: no changes — nothing to commit"
   exit 0
 fi
@@ -27,7 +29,8 @@ if [[ "${DRY_RUN:-0}" == "1" ]]; then
   exit 0
 fi
 
-git add -- "${FILES[@]}"
-git commit -m "chore: daily token-burn refresh ($(date +%Y-%m-%d))"
+# Pathspec commit: commits ONLY these files' current contents, ignoring whatever
+# else may be staged in the index — so the daily job never ships unrelated work.
+git commit -m "chore: daily token-burn refresh ($(date +%Y-%m-%d))" -- "${FILES[@]}"
 git push origin master
 echo "publish: pushed daily refresh"

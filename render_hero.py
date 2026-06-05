@@ -332,24 +332,30 @@ def render_svg(combined: dict, theme: dict, today: date) -> str:
     # ---- heatmap ----------------------------------------------------------- #
     hm_top = 224
     bucket = make_bucketer(combined["dayTokens"].values())
-    # month labels along the top: one per month-start column, but drop a partial
-    # leading month and keep a min column gap so adjacent labels never collide.
+    # month labels: place each month at the first column that actually contains a
+    # day of that month (handles mid-week month starts + trailing partial months);
+    # drop a leading month only if it crowds the next, and keep a 2-col min gap.
     month_y = hm_top - 6
-    starts, seen = [], set()
+    first_active = date.fromisoformat(combined["firstDate"])
+    last_active = date.fromisoformat(combined["lastDate"])
+    months_first_col: dict[tuple[int, int], int] = {}
     for w in range(n_weeks):
-        col_sun = first_sun + timedelta(days=w * 7)
-        key = (col_sun.year, col_sun.month)
-        if key not in seen:
-            seen.add(key)
-            starts.append((w, col_sun.strftime("%b")))
+        for row in range(7):
+            d = first_sun + timedelta(days=w * 7 + row)
+            if d < first_active or d > last_active:
+                continue
+            key = (d.year, d.month)
+            if key not in months_first_col:
+                months_first_col[key] = w
     placed = []
-    for i, (w, lab) in enumerate(starts):
-        nxt = starts[i + 1][0] if i + 1 < len(starts) else n_weeks
-        if w == 0 and nxt < 3:  # partial leading month -> skip
+    entries = sorted(months_first_col.items(), key=lambda kv: kv[1])
+    for i, ((yy, mm), w) in enumerate(entries):
+        nxt = entries[i + 1][1] if i + 1 < len(entries) else n_weeks
+        if i == 0 and nxt - w < 2:  # leading month crowds the next label
             continue
-        if placed and w - placed[-1] < 3:  # too close to previous label
+        if placed and w - placed[-1] < 2:  # too close to previous label
             continue
-        parts.append(_txt(hm_x + w * PITCH, month_y, lab, 9.5, t["faint"]))
+        parts.append(_txt(hm_x + w * PITCH, month_y, date(yy, mm, 1).strftime("%b"), 9.5, t["faint"]))
         placed.append(w)
     # day-of-week labels (Mon / Wed / Fri -> rows 1,3,5)
     for row, lab in ((1, "Mon"), (3, "Wed"), (5, "Fri")):
@@ -500,6 +506,9 @@ def main() -> None:
     today = date.fromisoformat(gen[:10]) if gen[:10] else date.today()
 
     combined = build_combined(stats, today)
+    if not combined["dayTokens"]:
+        print("render_hero: no usage data in stats.json — nothing to render")
+        return
 
     out_dir = os.path.expanduser(args.out_dir)
     os.makedirs(out_dir, exist_ok=True)
