@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# Daily token-burn refresh: recompute stats from local logs, re-render the hero
+# SVGs, and commit + push if anything changed. Run by the launchd agent
+# (com.turbokach.aitokenburn) once a day; safe to run by hand too.
+#
+#   ./tools/publish.sh            # refresh, commit, push
+#   DRY_RUN=1 ./tools/publish.sh  # refresh + show what WOULD be committed, no push
+set -euo pipefail
+
+REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$REPO"
+
+python3 collect.py        # writes data/stats.json + docs/data/stats.json
+python3 render_hero.py     # writes assets/overview-{light,dark}.svg
+
+# Only the generated artifacts — never working notes or stray files.
+FILES=(data/stats.json docs/data/stats.json assets/overview-light.svg assets/overview-dark.svg)
+
+if git diff --quiet -- "${FILES[@]}"; then
+  echo "publish: no changes — nothing to commit"
+  exit 0
+fi
+
+if [[ "${DRY_RUN:-0}" == "1" ]]; then
+  echo "publish: [dry-run] would commit + push:"
+  git status --porcelain -- "${FILES[@]}"
+  exit 0
+fi
+
+git add -- "${FILES[@]}"
+git commit -m "chore: daily token-burn refresh ($(date +%Y-%m-%d))"
+git push origin master
+echo "publish: pushed daily refresh"
