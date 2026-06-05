@@ -11,9 +11,24 @@ from datetime import datetime, timezone
 
 import engine
 
+_ROOT = os.path.dirname(os.path.abspath(__file__))
 # Default output sits next to this script (repo/data/stats.json), so a launchd job that
 # runs `python3 /path/to/collect.py` writes to the repo regardless of its working directory.
-_DEFAULT_OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "stats.json")
+_DEFAULT_OUT = os.path.join(_ROOT, "data", "stats.json")
+# The GitHub Pages SPA can only fetch files under docs/, so mirror stats.json there too
+# (script-relative) — the daily collect keeps the dashboard's data current.
+_DOCS_OUT = os.path.join(_ROOT, "docs", "data", "stats.json")
+
+
+def _atomic_write_json(stats: dict, path: str) -> None:
+    """Dump to a temp file in the same dir then os.replace, so an interrupted run never
+    leaves a consumer reading a truncated file. allow_nan=False => always valid JSON."""
+    out_dir = os.path.dirname(path) or "."
+    os.makedirs(out_dir, exist_ok=True)
+    tmp = f"{path}.tmp"
+    with open(tmp, "w") as fh:
+        json.dump(stats, fh, indent=2, allow_nan=False)
+    os.replace(tmp, path)
 
 
 def main() -> None:
@@ -30,15 +45,11 @@ def main() -> None:
         "codex": engine.compute_codex(args.codex_dir),
     }
 
-    # Atomic write: dump to a temp file in the same dir (allow_nan=False guarantees the
-    # output is valid JSON for every consumer), then os.replace so an interrupted run
-    # never leaves the profile graph reading a truncated file.
-    out_dir = os.path.dirname(args.out) or "."
-    os.makedirs(out_dir, exist_ok=True)
-    tmp = f"{args.out}.tmp"
-    with open(tmp, "w") as fh:
-        json.dump(stats, fh, indent=2, allow_nan=False)
-    os.replace(tmp, args.out)
+    _atomic_write_json(stats, args.out)
+    # Mirror into the Pages dir so the dashboard always reads the freshest data. Only when
+    # writing the default location (a custom --out, e.g. a test path, shouldn't publish).
+    if os.path.abspath(args.out) == os.path.abspath(_DEFAULT_OUT):
+        _atomic_write_json(stats, _DOCS_OUT)
 
     for tool in ("claude", "codex"):
         o = stats[tool]["overview"]
