@@ -1,0 +1,42 @@
+#!/usr/bin/env python3
+"""Collect Claude Code + Codex usage into a single stats.json for the profile graph.
+
+Output is aggregates only — token counts, dates, model names, hour buckets. No prompt
+text, no file paths, nothing sensitive. Safe to commit to a public repo.
+"""
+import argparse
+import json
+import os
+from datetime import datetime, timezone
+
+import engine
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--out", default="data/stats.json", help="output path")
+    ap.add_argument("--claude-dir", default=None, help="override ~/.claude")
+    ap.add_argument("--codex-dir", default=None, help="override ~/.codex")
+    args = ap.parse_args()
+
+    stats = {
+        "generatedAt": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "claude": engine.compute_claude(args.claude_dir),
+        "codex": engine.compute_codex(args.codex_dir),
+    }
+
+    os.makedirs(os.path.dirname(args.out) or ".", exist_ok=True)
+    with open(args.out, "w") as fh:
+        json.dump(stats, fh, indent=2)
+
+    for tool in ("claude", "codex"):
+        o = stats[tool]["overview"]
+        print(f"{tool:7s} {o['sessions']:>5} sessions  {o['messages']:>7} msgs  "
+              f"{o['totalTokens']/1e6:>7.1f}M tokens  {o['activeDays']:>3} active days  "
+              f"streak {o['currentStreak']}/{o['longestStreak']}  fav {o['favoriteModel']}")
+    combined = stats["claude"]["overview"]["totalTokens"] + stats["codex"]["overview"]["totalTokens"]
+    print(f"combined burn: {combined/1e6:.1f}M tokens  ->  {args.out}")
+
+
+if __name__ == "__main__":
+    main()

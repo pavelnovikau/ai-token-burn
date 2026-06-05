@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Verification oracle artifacts — these contain code extracted from the locally
+# installed Claude.app and MUST NOT be committed (proprietary). Regenerated on demand.
+oracle.js
+oracle*.json
+/tmp/
+*.frozen/
+extracted-app/
+
+# OS / editor
+.DS_Store
+node_modules/
