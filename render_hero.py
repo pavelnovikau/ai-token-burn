@@ -351,7 +351,8 @@ def render_svg(combined: dict, theme: dict, today: date) -> str:
     entries = sorted(months_first_col.items(), key=lambda kv: kv[1])
     for i, ((yy, mm), w) in enumerate(entries):
         nxt = entries[i + 1][1] if i + 1 < len(entries) else n_weeks
-        if i == 0 and nxt - w < 2:  # leading month crowds the next label
+        # drop a leading partial month only when a *next* month exists and would crowd it
+        if i == 0 and i + 1 < len(entries) and nxt - w < 2:
             continue
         if placed and w - placed[-1] < 2:  # too close to previous label
             continue

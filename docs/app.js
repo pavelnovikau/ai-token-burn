@@ -184,7 +184,8 @@ function renderHeatmap(M) {
   for (let i = 0, lastPlaced = -99; i < monthEntries.length; i++) {
     const [key, w] = monthEntries[i];
     const nxt = i + 1 < monthEntries.length ? monthEntries[i + 1][1] : nWeeks;
-    if (i === 0 && nxt - w < 2) continue; // leading month crowds the next label
+    // drop a leading partial month only when a *next* month exists and would crowd it
+    if (i === 0 && i + 1 < monthEntries.length && nxt - w < 2) continue;
     if (w - lastPlaced < 2) continue;     // too close to the previous label
     labelAt[w] = MONTHS[key % 12];
     lastPlaced = w;
