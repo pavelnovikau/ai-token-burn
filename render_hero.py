@@ -373,6 +373,9 @@ def render_svg(combined: dict, theme: dict, today: date) -> str:
     big_w = len(big) * big_adv + 6
     parts.append(_txt(P + big_w, ny, up("tokens"), 20, t["muted"], weight=600))
     burned = f"{combined['totalTokens']:,} tokens burned"
+    if combined.get("firstDate"):
+        since = date.fromisoformat(combined["firstDate"]).strftime("%b %-d, %Y")
+        burned += f" since {since}"
     parts.append(_txt(P + 2, ny + 24, burned, 12.5, t["muted"]))
 
     # ---- stat tiles -------------------------------------------------------- #
