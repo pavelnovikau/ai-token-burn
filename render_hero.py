@@ -20,7 +20,7 @@ import os
 from datetime import date, timedelta
 from html import escape
 
-from themes import DEFAULT_THEME, load_theme
+from themes import DEFAULT_THEME, load_theme, resolve_look
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 GATSBY_TOKENS = 62_000  # ~tokens in The Great Gatsby (mirrors the app's easter egg)
@@ -156,13 +156,15 @@ def short_date(iso: str | None) -> str:
 # --------------------------------------------------------------------------- #
 def theme_appearances(theme_id: str = DEFAULT_THEME) -> list[dict]:
     """The light + dark appearance dicts for a theme (themes/<id>.json), each
-    tagged with `name` so render_svg can label it and main() can name the file.
-    The single source of truth is shared with the web CSS via themes.py."""
+    tagged with `name` (for the filename) and the resolved `look` tokens. The
+    single source of truth is shared with the web CSS via themes.py."""
     theme = load_theme(theme_id)
+    look = resolve_look(theme)
     appearances = []
     for name in ("light", "dark"):
         appearance = dict(theme[name])
         appearance["name"] = name
+        appearance["look"] = look
         appearances.append(appearance)
     return appearances
 
@@ -227,11 +229,21 @@ def _txt(x, y, s, size, fill, *, weight=400, anchor="start", spacing=None, opaci
 
 def render_svg(combined: dict, theme: dict, today: date) -> str:
     t = theme
-    FONT = (
+    look = t.get("look", {})
+    FONT = look.get("svgFont") or (
         "-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, "
         "'Liberation Sans', sans-serif"
     )
-    MONO = "ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, Consolas, monospace"
+
+    # look-driven geometry. `rad` scales every corner radius (1 = original card
+    # look, 0 = square/monospace); `sw` is the stroke-width attribute, emitted
+    # only when thicker than the default 1px so Ember's SVG stays byte-identical;
+    # `up` uppercases grid captions when the theme asks for it.
+    _rs = look.get("radiusScale", 1)
+    _bw = int(str(look.get("borderWidth", "1px")).rstrip("px"))
+    rad = lambda base: round(base * _rs)
+    sw = "" if _bw == 1 else f' stroke-width="{_bw}"'
+    up = (lambda s: s.upper()) if look.get("uppercase") else (lambda s: s)
 
     # ---- heatmap geometry first; it drives canvas width -------------------- #
     first_sun, n_weeks = heatmap_grid(combined["dayTokens"], today)
@@ -254,10 +266,10 @@ def render_svg(combined: dict, theme: dict, today: date) -> str:
         f'viewBox="0 0 {W} {H}" font-family="{FONT}" role="img" '
         f'aria-label="Token burn — Claude Code + Codex">'
     )
-    # rounded card background
+    # card background (square when the theme's radius scale is 0)
     parts.append(
-        f'<rect x="0.5" y="0.5" width="{W-1}" height="{H-1}" rx="14" '
-        f'fill="{t["bg"]}" stroke="{t["stroke"]}"/>'
+        f'<rect x="0.5" y="0.5" width="{W-1}" height="{H-1}" rx="{rad(14)}" '
+        f'fill="{t["bg"]}" stroke="{t["stroke"]}"{sw}/>'
     )
 
     # ---- header ------------------------------------------------------------ #
@@ -278,15 +290,17 @@ def render_svg(combined: dict, theme: dict, today: date) -> str:
     )
     parts.append(
         f'<line x1="{P}" y1="{hy+22}" x2="{W-P}" y2="{hy+22}" '
-        f'stroke="{t["stroke"]}"/>'
+        f'stroke="{t["stroke"]}"{sw}/>'
     )
 
     # ---- hero number + gatsby --------------------------------------------- #
     big = human_tokens(combined["totalTokens"])
     ny = 116
     parts.append(_txt(P, ny, big, 54, t["accent"], weight=800))
-    big_w = len(big) * 30 + 6  # rough advance for " tokens" placement
-    parts.append(_txt(P + big_w, ny, "tokens", 20, t["muted"], weight=600))
+    # rough advance for unit placement; fixed-width fonts run ~0.6em/char wider
+    big_adv = 33 if look.get("mono") else 30
+    big_w = len(big) * big_adv + 6
+    parts.append(_txt(P + big_w, ny, up("tokens"), 20, t["muted"], weight=600))
     gatsby = f"≈ {combined['gatsby']:,.0f} × The Great Gatsby  ·  {combined['totalTokens']:,} tokens burned"
     parts.append(_txt(P + 2, ny + 24, gatsby, 12.5, t["muted"]))
 
@@ -307,11 +321,11 @@ def render_svg(combined: dict, theme: dict, today: date) -> str:
         # value: shrink font if it's a long string (model name)
         vsize = 20 if len(val) <= 9 else (15 if len(val) <= 13 else 13)
         parts.append(_txt(cx, tile_y, val, vsize, t["text"], weight=700))
-        parts.append(_txt(cx, tile_y + 16, lab, 10.5, t["muted"]))
+        parts.append(_txt(cx, tile_y + 16, up(lab), 10.5, t["muted"]))
         if i > 0:
             parts.append(
                 f'<line x1="{cx-12:.1f}" y1="{tile_y-16}" x2="{cx-12:.1f}" '
-                f'y2="{tile_y+18}" stroke="{t["stroke"]}" opacity="0.7"/>'
+                f'y2="{tile_y+18}" stroke="{t["stroke"]}"{sw} opacity="0.7"/>'
             )
 
     # ---- heatmap ----------------------------------------------------------- #
@@ -341,12 +355,12 @@ def render_svg(combined: dict, theme: dict, today: date) -> str:
             continue
         if placed and w - placed[-1] < 2:  # too close to previous label
             continue
-        parts.append(_txt(hm_x + w * PITCH, month_y, date(yy, mm, 1).strftime("%b"), 9.5, t["faint"]))
+        parts.append(_txt(hm_x + w * PITCH, month_y, up(date(yy, mm, 1).strftime("%b")), 9.5, t["faint"]))
         placed.append(w)
     # day-of-week labels (Mon / Wed / Fri -> rows 1,3,5)
     for row, lab in ((1, "Mon"), (3, "Wed"), (5, "Fri")):
         parts.append(
-            _txt(P + DAY_GUTTER - 6, hm_top + row * PITCH + CELL - 2, lab, 9,
+            _txt(P + DAY_GUTTER - 6, hm_top + row * PITCH + CELL - 2, up(lab), 9,
                  t["faint"], anchor="end")
         )
     # cells
@@ -362,7 +376,7 @@ def render_svg(combined: dict, theme: dict, today: date) -> str:
         lvl = bucket(tok)
         fill = t["empty"] if lvl == 0 else t["ramp"][lvl - 1]
         cells.append(
-            f'<rect x="{x}" y="{y}" width="{CELL}" height="{CELL}" rx="2" fill="{fill}"/>'
+            f'<rect x="{x}" y="{y}" width="{CELL}" height="{CELL}" rx="{rad(2)}" fill="{fill}"/>'
         )
     # fill the empty cells in the spanned range so the grid reads as a calendar
     spanned = {date.fromisoformat(d) for d in combined["dayTokens"]}
@@ -375,7 +389,7 @@ def render_svg(combined: dict, theme: dict, today: date) -> str:
             x = hm_x + w * PITCH
             y = hm_top + row * PITCH
             cells.append(
-                f'<rect x="{x}" y="{y}" width="{CELL}" height="{CELL}" rx="2" '
+                f'<rect x="{x}" y="{y}" width="{CELL}" height="{CELL}" rx="{rad(2)}" '
                 f'fill="{t["empty"]}"/>'
             )
     cells.append("</g>")
@@ -393,8 +407,8 @@ def render_svg(combined: dict, theme: dict, today: date) -> str:
     cx = px
     for i, s in enumerate(combined["split"]):
         seg = pw * s["tokens"] / total
-        r_left = 4 if i == 0 else 0
-        r_right = 4 if i == len(combined["split"]) - 1 else 0
+        r_left = rad(4) if i == 0 else 0
+        r_right = rad(4) if i == len(combined["split"]) - 1 else 0
         parts.append(_rounded_seg(cx, bar_y, seg, bar_h, r_left, r_right, colors[s["tool"]]))
         cx += seg
     # split labels (Claude left, Codex right)
@@ -403,14 +417,14 @@ def render_svg(combined: dict, theme: dict, today: date) -> str:
         pct = 100 * s["tokens"] / total
         if i == 0:
             parts.append(
-                f'<rect x="{px}" y="{ly-9}" width="9" height="9" rx="2" fill="{colors[s["tool"]]}"/>'
+                f'<rect x="{px}" y="{ly-9}" width="9" height="9" rx="{rad(2)}" fill="{colors[s["tool"]]}"/>'
             )
             parts.append(_txt(px + 13, ly,
                               f'{s["tool"]}  {human_tokens(s["tokens"])} · {pct:.0f}%',
                               11, t["text"]))
         else:
             parts.append(
-                f'<rect x="{px+pw-9:.1f}" y="{ly-9}" width="9" height="9" rx="2" fill="{colors[s["tool"]]}"/>'
+                f'<rect x="{px+pw-9:.1f}" y="{ly-9}" width="9" height="9" rx="{rad(2)}" fill="{colors[s["tool"]]}"/>'
             )
             parts.append(_txt(px + pw - 13, ly,
                               f'{s["tool"]}  {human_tokens(s["tokens"])} · {pct:.0f}%',
@@ -427,14 +441,14 @@ def render_svg(combined: dict, theme: dict, today: date) -> str:
 
     # intensity legend (less -> more)
     leg_y = 342
-    parts.append(_txt(px, leg_y, "Less", 9.5, t["muted"]))
+    parts.append(_txt(px, leg_y, up("Less"), 9.5, t["muted"]))
     lx = px + 28
     for c in [t["empty"]] + t["ramp"]:
         parts.append(
-            f'<rect x="{lx}" y="{leg_y-9}" width="{CELL}" height="{CELL}" rx="2" fill="{c}"/>'
+            f'<rect x="{lx}" y="{leg_y-9}" width="{CELL}" height="{CELL}" rx="{rad(2)}" fill="{c}"/>'
         )
         lx += PITCH
-    parts.append(_txt(lx + 2, leg_y, "More", 9.5, t["muted"]))
+    parts.append(_txt(lx + 2, leg_y, up("More"), 9.5, t["muted"]))
 
     # ---- footer ------------------------------------------------------------ #
     fy = H - 18
