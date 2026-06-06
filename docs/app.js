@@ -3,7 +3,6 @@
    All windowed metrics recompute from daily[] (Σdaily == overview, verified). */
 'use strict';
 
-const GATSBY = 62000;
 const state = { tool: 'claude', window: 'all', view: 'overview', subagents: false };
 let DATA = null;
 
@@ -132,11 +131,10 @@ function computeMetrics(tool) {
 
 /* ---- tiles ------------------------------------------------------------- */
 function renderTiles(M) {
-  const gatsby = (M.tokens / GATSBY).toLocaleString('en-US', { maximumFractionDigits: 0 });
   const subCap = M.hasSub && M.subTok
     ? `incl. ${humanTokens(M.subTok)} subagent (${(100 * M.subTok / M.tokens).toFixed(0)}%)` : '';
   const tiles = [
-    { k: 'Total tokens', v: humanTokens(M.tokens), accent: true, x: `≈ ${gatsby} × The Great Gatsby`, x2: subCap },
+    { k: 'Total tokens', v: humanTokens(M.tokens), accent: true, x: `${intc(M.tokens)} tokens`, x2: subCap },
     { k: 'Sessions', v: intc(M.sessions), x: M.showSub ? 'main + subagents' : '' },
     { k: 'Messages', v: intc(M.messages), x: M.showSub ? 'main + subagents' : '' },
     { k: 'Active days', v: intc(M.activeDays) },

@@ -24,7 +24,6 @@ from html import escape
 from themes import DEFAULT_THEME, load_theme, resolve_look
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-GATSBY_TOKENS = 62_000  # ~tokens in The Great Gatsby (mirrors the app's easter egg)
 
 # The 37-colour DOOM fire palette (coldest → hottest), shared with the dashboard's
 # live canvas flame in docs/flame.js. https://github.com/filipedeschamps/doom-fire-algorithm
@@ -102,7 +101,6 @@ def build_combined(stats: dict, today: date) -> dict:
         "peakHour": peak_hour,
         "tzLabel": _utc_label(stats.get("tzOffsetMinutes")),
         "favoriteModel": favorite_model,
-        "gatsby": combined_total / GATSBY_TOKENS,
         "dayTokens": day_tokens,
         "hottestDate": hottest_date,
         "hottestTokens": hottest_tokens,
@@ -366,7 +364,7 @@ def render_svg(combined: dict, theme: dict, today: date) -> str:
         f'stroke="{t["stroke"]}"{sw}/>'
     )
 
-    # ---- hero number + gatsby --------------------------------------------- #
+    # ---- hero number ------------------------------------------------------ #
     big = human_tokens(combined["totalTokens"])
     ny = 116
     parts.append(_txt(P, ny, big, 54, t["accent"], weight=800))
@@ -374,8 +372,8 @@ def render_svg(combined: dict, theme: dict, today: date) -> str:
     big_adv = 33 if look.get("mono") else 30
     big_w = len(big) * big_adv + 6
     parts.append(_txt(P + big_w, ny, up("tokens"), 20, t["muted"], weight=600))
-    gatsby = f"≈ {combined['gatsby']:,.0f} × The Great Gatsby  ·  {combined['totalTokens']:,} tokens burned"
-    parts.append(_txt(P + 2, ny + 24, gatsby, 12.5, t["muted"]))
+    burned = f"{combined['totalTokens']:,} tokens burned"
+    parts.append(_txt(P + 2, ny + 24, burned, 12.5, t["muted"]))
 
     # ---- stat tiles -------------------------------------------------------- #
     tiles = [
