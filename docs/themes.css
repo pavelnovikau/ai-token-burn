@@ -19,7 +19,7 @@
   --l4: #111111;
   --shadow: none;
   --on-accent: #000000;
-  --bar: #000000;
+  --bar: #666666;
   --font-body: "JetBrains Mono", ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
   --radius-scale: 0;
   --border-width: 2px;
@@ -45,6 +45,6 @@
     --l4: #dddddd;
     --shadow: none;
     --on-accent: #000000;
-    --bar: #ffffff;
+    --bar: #cccccc;
   }
 }
