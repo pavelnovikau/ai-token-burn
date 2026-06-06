@@ -7,8 +7,9 @@ text, no file paths, nothing sensitive. Safe to commit to a public repo.
 import argparse
 import json
 import os
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 
+import accumulate
 import engine
 
 _ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -36,14 +37,27 @@ def main() -> None:
     ap.add_argument("--out", default=_DEFAULT_OUT, help="output path")
     ap.add_argument("--claude-dir", default=None, help="override ~/.claude")
     ap.add_argument("--codex-dir", default=None, help="override ~/.codex")
+    ap.add_argument("--fresh", action="store_true",
+                    help="ignore the existing snapshot — full recompute, no accumulation")
     args = ap.parse_args()
     args.out = os.path.expanduser(args.out)  # launchd does no shell expansion of a literal ~
 
-    stats = {
+    fresh = {
         "generatedAt": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "claude": engine.compute_claude(args.claude_dir),
         "codex": engine.compute_codex(args.codex_dir),
     }
+
+    # Accumulate onto the previously published snapshot so days already captured
+    # survive even after Claude/Codex prune their raw logs. --fresh skips this.
+    old = None
+    if not args.fresh and os.path.exists(args.out):
+        try:
+            with open(args.out) as fh:
+                old = json.load(fh)
+        except (json.JSONDecodeError, OSError):
+            old = None  # unreadable snapshot -> just publish the fresh compute
+    stats = accumulate.merge_stats(old, fresh, date.today())
 
     _atomic_write_json(stats, args.out)
     # Mirror into the Pages dir so the dashboard always reads the freshest data. Only when
