@@ -20,6 +20,8 @@ import os
 from datetime import date, timedelta
 from html import escape
 
+from themes import DEFAULT_THEME, load_theme
+
 ROOT = os.path.dirname(os.path.abspath(__file__))
 GATSBY_TOKENS = 62_000  # ~tokens in The Great Gatsby (mirrors the app's easter egg)
 
@@ -152,34 +154,17 @@ def short_date(iso: str | None) -> str:
 # --------------------------------------------------------------------------- #
 # themes
 # --------------------------------------------------------------------------- #
-LIGHT = {
-    "name": "light",
-    "bg": "#ffffff",
-    "panel": "#f6f8fa",
-    "stroke": "#d8dee4",
-    "text": "#1f2328",
-    "muted": "#656d76",
-    "faint": "#8c959f",
-    "empty": "#ebedf0",  # heatmap empty cell
-    "ramp": ["#ffd8a8", "#ffa94d", "#f76707", "#b21e0b"],  # cool->hot ember
-    "accent": "#e8590c",
-    "claude": "#d2691e",
-    "codex": "#1f6feb",
-}
-DARK = {
-    "name": "dark",
-    "bg": "#0d1117",
-    "panel": "#161b22",
-    "stroke": "#30363d",
-    "text": "#e6edf3",
-    "muted": "#8b949e",
-    "faint": "#6e7681",
-    "empty": "#1b1f24",
-    "ramp": ["#582f0e", "#9a4a00", "#e8590c", "#ffb454"],  # dim->bright ember
-    "accent": "#ff7b29",
-    "claude": "#e8843c",
-    "codex": "#58a6ff",
-}
+def theme_appearances(theme_id: str = DEFAULT_THEME) -> list[dict]:
+    """The light + dark appearance dicts for a theme (themes/<id>.json), each
+    tagged with `name` so render_svg can label it and main() can name the file.
+    The single source of truth is shared with the web CSS via themes.py."""
+    theme = load_theme(theme_id)
+    appearances = []
+    for name in ("light", "dark"):
+        appearance = dict(theme[name])
+        appearance["name"] = name
+        appearances.append(appearance)
+    return appearances
 
 
 # --------------------------------------------------------------------------- #
@@ -496,6 +481,7 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--stats", default=os.path.join(ROOT, "data", "stats.json"))
     ap.add_argument("--out-dir", default=os.path.join(ROOT, "assets"))
+    ap.add_argument("--theme", default=DEFAULT_THEME, help="theme id in themes/")
     args = ap.parse_args()
 
     with open(os.path.expanduser(args.stats)) as f:
@@ -513,7 +499,7 @@ def main() -> None:
 
     out_dir = os.path.expanduser(args.out_dir)
     os.makedirs(out_dir, exist_ok=True)
-    for theme in (LIGHT, DARK):
+    for theme in theme_appearances(args.theme):
         svg = render_svg(combined, theme, today)
         path = os.path.join(out_dir, f"overview-{theme['name']}.svg")
         tmp = path + ".tmp"

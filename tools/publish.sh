@@ -12,9 +12,10 @@ cd "$REPO"
 
 python3 collect.py        # writes data/stats.json + docs/data/stats.json
 python3 render_hero.py     # writes assets/overview-{light,dark}.svg
+python3 themes.py          # writes docs/themes.css from the active theme
 
 # Only the generated artifacts — never working notes or stray files.
-FILES=(data/stats.json docs/data/stats.json assets/overview-light.svg assets/overview-dark.svg)
+FILES=(data/stats.json docs/data/stats.json assets/overview-light.svg assets/overview-dark.svg docs/themes.css)
 
 # Compare against HEAD (not just the working tree) so a prior run that staged
 # but didn't commit is still detected.
