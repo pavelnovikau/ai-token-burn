@@ -97,8 +97,8 @@ h1 { font-size: 26px; font-weight: 800; letter-spacing: .5px; margin: 0; text-tr
 
 /* hours histogram ------------------------------------------------------- */
 .hours { display: grid; grid-template-columns: repeat(24, 1fr); align-items: end; gap: 2px; height: 130px; }
-.hours .hb { background: var(--bar); border-radius: calc(2px * var(--radius-scale)) calc(2px * var(--radius-scale)) 0 0; min-height: 2px; opacity: .55; transition: opacity .12s; }
-.hours .hb.peak { background: var(--accent); opacity: 1; }
+.hours .hb { background: var(--bar); border-radius: calc(2px * var(--radius-scale)) calc(2px * var(--radius-scale)) 0 0; min-height: 2px; opacity: .8; transition: opacity .12s; }
+.hours .hb.peak { opacity: 1; }
 .hours .hb:hover { opacity: 1; }
 .hours-axis { display: grid; grid-template-columns: repeat(24, 1fr); gap: 2px; margin-top: 4px; font-size: 9px; color: var(--faint); }
 
