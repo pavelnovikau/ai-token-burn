@@ -23,25 +23,30 @@ hour buckets. No prompt text, no file paths. Safe to publish.
 
 ## ⚠️ Claude Code silently deletes your history (`cleanupPeriodDays`)
 
-Claude Code **prunes local transcripts** on a rolling window controlled by the
-`cleanupPeriodDays` setting, which **defaults to 30 days** — older
-`~/.claude/projects/**/*.jsonl` files are deleted on startup. Since subscription usage
-exists *nowhere else* (not in any API), that history is **gone for good**. Codex rotates
-its rollouts the same way. This is why a brand-new install of this tool will show only
-the last ~month, no matter how long you've actually been using Claude Code.
+Claude Code **prunes local transcripts** on a rolling window set by `cleanupPeriodDays`,
+which **defaults to 30 days** — older `~/.claude/projects/**/*.jsonl` files are deleted on
+startup. Since subscription usage exists *nowhere else* (not in any API), anything pruned
+before you first run this tool is **gone for good**. Codex rotates its rollouts the same
+way. That's why a fresh install shows only the last ~month, however long you've really been
+using Claude Code.
 
-If you want to keep your full burn history, raise the limit in `~/.claude/settings.json`
-**before** the data ages out:
+Two independent things protect you going forward:
 
-```json
-{ "cleanupPeriodDays": 3650 }
-```
+1. **The graph** — `collect.py` **accumulates** (`accumulate.py`): each run merges with the
+   previously published `stats.json` (union of days; the higher-token row per day wins), so
+   once a day is captured it is never lost, even after its transcript is pruned. Run it at
+   least once per retention window — the daily launchd job does — and the dashboard only
+   ever grows. Trade-off: accumulated totals can **exceed** what the Claude app shows, since
+   the app also only sees the un-pruned window.
+2. **The raw transcripts** — if you want the actual conversations kept on disk (to re-read
+   or search later), raise the limit in `~/.claude/settings.json`:
 
-As a safety net, `collect.py` also **accumulates** (`accumulate.py`): each run merges with
-the previously published `stats.json` — union of days, keeping the higher-token row per
-day — so a day once captured is never lost even if its raw transcript is later pruned.
-Trade-off: accumulated totals can **exceed** what the Claude app shows, because the app
-itself only ever sees the un-pruned window.
+   ```json
+   { "cleanupPeriodDays": 365 }
+   ```
+
+   Disk heads-up: heavy use writes on the order of **~20 MB/day (~7 GB/year)** of Claude
+   transcripts, so pick a window that fits your disk rather than an unbounded one.
 
 ## Fidelity: reimplement **and** verify
 
