@@ -19,3 +19,5 @@ node_modules/
 # Local working notes — not for the public repo
 docs/prompts/
 .gstack/
+
+.vercel
