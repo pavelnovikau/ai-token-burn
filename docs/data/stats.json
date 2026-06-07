@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-06-07T09:25:10Z",
+  "generatedAt": "2026-06-07T09:31:45Z",
   "tzOffsetMinutes": 120,
   "claude": {
     "tool": "claude",
     "overview": {
       "sessions": 124,
-      "messages": 94956,
-      "totalTokens": 201781897,
-      "activeDays": 34,
+      "messages": 95033,
+      "totalTokens": 201865138,
+      "activeDays": 35,
       "peakHour": 11,
       "favoriteModel": "claude-opus-4-7",
       "firstSessionDate": "2026-05-04T08:24:50.499Z",
       "lastSessionDate": "2026-06-06T09:50:09.013Z",
-      "currentStreak": 34,
-      "longestStreak": 34
+      "currentStreak": 35,
+      "longestStreak": 35
     },
     "models": [
       {
@@ -27,11 +27,11 @@
       },
       {
         "model": "claude-opus-4-8",
-        "in": 26916913,
-        "out": 41035144,
-        "cacheRead": 6267104129,
-        "cacheCreation": 313641809,
-        "total": 67952057,
+        "in": 26918625,
+        "out": 41116673,
+        "cacheRead": 6277421189,
+        "cacheCreation": 313721475,
+        "total": 68035298,
         "pct": 33.7
       },
       {
@@ -431,12 +431,12 @@
       },
       {
         "date": "2026-06-01",
-        "tokens": 5860709,
+        "tokens": 5913890,
         "byModel": {
-          "claude-opus-4-8": 5782906,
+          "claude-opus-4-8": 5836087,
           "claude-sonnet-4-6": 77803
         },
-        "messages": 2668,
+        "messages": 2727,
         "sessions": 8,
         "subTokens": 1412323,
         "subMessages": 1159,
@@ -470,12 +470,12 @@
       },
       {
         "date": "2026-06-04",
-        "tokens": 3412693,
+        "tokens": 3423871,
         "byModel": {
           "claude-haiku-4-5-20251001": 737,
-          "claude-opus-4-8": 3411956
+          "claude-opus-4-8": 3423134
         },
-        "messages": 2067,
+        "messages": 2072,
         "sessions": 1,
         "subTokens": 51523,
         "subMessages": 26,
@@ -496,12 +496,12 @@
       },
       {
         "date": "2026-06-06",
-        "tokens": 1456383,
+        "tokens": 1475265,
         "byModel": {
-          "claude-opus-4-8": 1292062,
+          "claude-opus-4-8": 1310944,
           "claude-sonnet-4-6": 164321
         },
-        "messages": 915,
+        "messages": 928,
         "sessions": 2,
         "subTokens": 452971,
         "subMessages": 1503,
