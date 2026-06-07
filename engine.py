@@ -130,13 +130,20 @@ def _codex_rollouts(sessions_dir: str) -> list[str]:
 def _streaks(active_dates: set[str]) -> dict:
     if not active_dates:
         return {"currentStreak": 0, "longestStreak": 0}
-    today = datetime.now().astimezone().replace(hour=0, minute=0, second=0, microsecond=0)
-    cur = 0
-    d = today
-    while d.strftime("%Y-%m-%d") in active_dates:
-        cur += 1
-        d -= timedelta(days=1)
     arr = sorted(active_dates)
+    # Current streak = consecutive active days ending at the most recent active
+    # day. A streak stays alive *through* today and only breaks once a whole day
+    # passes with no activity, so anchor the walk at the last active day when it
+    # is today or yesterday — anchoring strictly at today reads 0 whenever the
+    # day's first non-subagent session hasn't landed yet at collection time.
+    today = datetime.now().astimezone().date()
+    last = datetime.strptime(arr[-1], "%Y-%m-%d").date()
+    cur = 0
+    if (today - last).days <= 1:
+        d = last
+        while d.strftime("%Y-%m-%d") in active_dates:
+            cur += 1
+            d -= timedelta(days=1)
     longest = run = 1
     for i in range(1, len(arr)):
         p = datetime.strptime(arr[i - 1], "%Y-%m-%d")

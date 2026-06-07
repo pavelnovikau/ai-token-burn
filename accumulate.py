@@ -35,11 +35,16 @@ def _streaks(dates: list[str], today: date) -> tuple[int, int]:
     for prev, cur in zip(days, days[1:]):
         run = run + 1 if (cur - prev).days == 1 else 1
         longest = max(longest, run)
+    # Current streak stays alive through today and only breaks after a whole
+    # idle day, so anchor at the most recent active day when it is today or
+    # yesterday (mirrors engine._streaks).
     dset = set(days)
-    cur, d = 0, today
-    while d in dset:
-        cur += 1
-        d -= timedelta(days=1)
+    cur, last = 0, days[-1]
+    if (today - last).days <= 1:
+        d = last
+        while d in dset:
+            cur += 1
+            d -= timedelta(days=1)
     return cur, longest
 
 

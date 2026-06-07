@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Daily token-burn refresh for pavelnovikau. Install:
+       cp tools/com.pavelnovikau.aitokenburn.plist ~/Library/LaunchAgents/
+       launchctl unload ~/Library/LaunchAgents/com.pavelnovikau.aitokenburn.plist 2>/dev/null
+       launchctl load   ~/Library/LaunchAgents/com.pavelnovikau.aitokenburn.plist
+     Runs once a day; if the Mac is asleep at the scheduled time, launchd fires it on wake. -->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.pavelnovikau.aitokenburn</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/pn/github/ai-token-burn/tools/publish.sh</string>
+  </array>
+
+  <!-- launchd's PATH is minimal; add Homebrew so git/python3 and
+       git-credential-osxkeychain resolve for the push. -->
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+  </dict>
+
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key><integer>10</integer>
+    <key>Minute</key><integer>0</integer>
+  </dict>
+
+  <key>StandardOutPath</key>
+  <string>/Users/pn/Library/Logs/aitokenburn.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/pn/Library/Logs/aitokenburn.err.log</string>
+</dict>
+</plist>
