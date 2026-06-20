@@ -10,7 +10,10 @@ set -euo pipefail
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO"
 
-python3 collect.py        # writes data/stats.json + docs/data/stats.json
+# Combine all three local Claude environments — pn-main + smartcat + claude-pn — into one
+# burn graph (comma-separated; a missing dir is skipped harmlessly). writes data/stats.json
+# + docs/data/stats.json
+python3 collect.py --claude-dir "$HOME/.claude,$HOME/.claude-smartcat,$HOME/.claude-pn"
 python3 render_hero.py     # writes assets/overview-{light,dark}.svg
 python3 themes.py          # writes docs/themes.css from the active theme
 

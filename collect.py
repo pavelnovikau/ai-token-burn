@@ -35,7 +35,9 @@ def _atomic_write_json(stats: dict, path: str) -> None:
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--out", default=_DEFAULT_OUT, help="output path")
-    ap.add_argument("--claude-dir", default=None, help="override ~/.claude")
+    ap.add_argument("--claude-dir", default=None,
+                    help="override ~/.claude; comma-separated for multiple envs "
+                         "(e.g. ~/.claude,~/.claude-smartcat,~/.claude-pn)")
     ap.add_argument("--codex-dir", default=None, help="override ~/.codex")
     ap.add_argument("--fresh", action="store_true",
                     help="ignore the existing snapshot — full recompute, no accumulation")

@@ -183,8 +183,12 @@ def _models_list(usage: dict) -> list[dict]:
 
 def compute_claude(claude_dir: str | None = None, since_days: int | None = None) -> dict:
     """Aggregate Claude Code usage. `since_days` caps history (None = all on disk)."""
-    claude_dir = os.path.expanduser(claude_dir or os.environ.get("CLAUDE_CONFIG_DIR") or "~/.claude")
-    projects = os.path.join(claude_dir, "projects")
+    raw = claude_dir or os.environ.get("CLAUDE_CONFIG_DIR") or "~/.claude"
+    # Accept a comma-separated list of config dirs (e.g. "~/.claude,~/.claude-smartcat,
+    # ~/.claude-pn") so usage across multiple Claude environments sums into one combined
+    # graph — same convention as ccusage / CodexBar. A single dir is just a list of one.
+    project_dirs = [os.path.join(os.path.expanduser(p.strip()), "projects")
+                    for p in raw.split(",") if p.strip()]
     floor = ((datetime.now().astimezone() - timedelta(days=since_days)).strftime("%Y-%m-%d")
              if since_days is not None else None)
     sub_marker = f"{os.sep}subagents{os.sep}"
@@ -199,7 +203,7 @@ def compute_claude(claude_dir: str | None = None, since_days: int | None = None)
     daily_model: dict[str, dict] = {}        # date -> {model: in+out}       (app-identical, incl subagent)
     daily_model_sub: dict[str, dict] = {}    # subagent-only
 
-    for path in _claude_transcripts(projects):
+    for path in (p for pd in project_dirs for p in _claude_transcripts(pd)):
         entries = _parse_jsonl(path, _CLAUDE_EXTRA_SPLIT)
         msgs = [e for e in entries if e.get("type") in ("user", "assistant")]
         if not msgs:
