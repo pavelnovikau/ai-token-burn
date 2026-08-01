@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-07-31T08:00:05Z",
+  "generatedAt": "2026-08-01T08:00:05Z",
   "tzOffsetMinutes": 120,
   "claude": {
     "tool": "claude",
     "overview": {
-      "sessions": 335,
-      "messages": 242915,
-      "totalTokens": 485704209,
+      "sessions": 337,
+      "messages": 244784,
+      "totalTokens": 487139255,
       "activeDays": 88,
       "peakHour": 11,
       "favoriteModel": "claude-opus-4-8",
       "firstSessionDate": "2026-05-04T08:24:50.499Z",
-      "lastSessionDate": "2026-07-31T05:37:08.216Z",
+      "lastSessionDate": "2026-07-31T15:43:56.390Z",
       "currentStreak": 13,
       "longestStreak": 75
     },
@@ -23,7 +23,7 @@
         "cacheRead": 33667685991,
         "cacheCreation": 1084333825,
         "total": 275443208,
-        "pct": 56.7
+        "pct": 56.5
       },
       {
         "model": "claude-opus-4-7",
@@ -32,7 +32,7 @@
         "cacheRead": 11173842718,
         "cacheCreation": 700765095,
         "total": 69855203,
-        "pct": 14.4
+        "pct": 14.3
       },
       {
         "model": "claude-sonnet-4-6",
@@ -62,21 +62,21 @@
         "pct": 2.8
       },
       {
+        "model": "claude-opus-5",
+        "in": 30593,
+        "out": 12309100,
+        "cacheRead": 3069298002,
+        "cacheCreation": 88374393,
+        "total": 13251086,
+        "pct": 2.7
+      },
+      {
         "model": "claude-sonnet-5",
         "in": 6573626,
         "out": 5246041,
         "cacheRead": 1557599535,
         "cacheCreation": 63037918,
-        "total": 11933807,
-        "pct": 2.5
-      },
-      {
-        "model": "claude-opus-5",
-        "in": 28411,
-        "out": 10876242,
-        "cacheRead": 2707122379,
-        "cacheCreation": 70382267,
-        "total": 11816046,
+        "total": 11933813,
         "pct": 2.4
       },
       {
@@ -1224,13 +1224,13 @@
       },
       {
         "date": "2026-07-28",
-        "tokens": 2126794,
+        "tokens": 2333098,
         "byModel": {
-          "claude-opus-5": 1741109,
+          "claude-opus-5": 1947413,
           "claude-fable-5": 336711,
           "claude-sonnet-5": 48974
         },
-        "messages": 1994,
+        "messages": 2285,
         "sessions": 2,
         "subTokens": 166294,
         "subMessages": 287,
@@ -1252,11 +1252,11 @@
       },
       {
         "date": "2026-07-30",
-        "tokens": 808448,
+        "tokens": 1136287,
         "byModel": {
-          "claude-opus-5": 808448
+          "claude-opus-5": 1136287
         },
-        "messages": 731,
+        "messages": 1128,
         "sessions": 3,
         "subTokens": 129507,
         "subMessages": 375,
@@ -1264,15 +1264,16 @@
       },
       {
         "date": "2026-07-31",
-        "tokens": 394119,
+        "tokens": 1295022,
         "byModel": {
-          "claude-opus-5": 394119
+          "claude-opus-5": 1295016,
+          "claude-sonnet-5": 6
         },
-        "messages": 458,
-        "sessions": 2,
-        "subTokens": 0,
-        "subMessages": 0,
-        "subSessions": 0
+        "messages": 1639,
+        "sessions": 4,
+        "subTokens": 6,
+        "subMessages": 2,
+        "subSessions": 1
       }
     ],
     "hourCounts": {
@@ -1374,15 +1375,15 @@
   "codex": {
     "tool": "codex",
     "overview": {
-      "sessions": 259,
-      "messages": 16065,
-      "totalTokens": 655109128,
-      "activeDays": 47,
+      "sessions": 264,
+      "messages": 16146,
+      "totalTokens": 655493650,
+      "activeDays": 48,
       "peakHour": 10,
       "favoriteModel": "gpt-5.6-sol",
       "firstSessionDate": "2026-03-29T15:46:48.916Z",
-      "lastSessionDate": "2026-07-30T09:04:19.080Z",
-      "currentStreak": 3,
+      "lastSessionDate": "2026-07-31T16:04:04.021Z",
+      "currentStreak": 4,
       "longestStreak": 7
     },
     "models": [
@@ -1392,7 +1393,7 @@
         "out": 25467581,
         "cacheRead": 6708404992,
         "cacheCreation": 0,
-        "total": 557591216,
+        "total": 557857665,
         "pct": 85.1
       },
       {
@@ -1415,11 +1416,11 @@
       },
       {
         "model": "codex-auto-review",
-        "in": 4709102,
-        "out": 8842,
-        "cacheRead": 8020992,
+        "in": 4823804,
+        "out": 12213,
+        "cacheRead": 8781312,
         "cacheCreation": 0,
-        "total": 4717944,
+        "total": 4836017,
         "pct": 0.7
       },
       {
@@ -1861,6 +1862,16 @@
         },
         "messages": 745,
         "sessions": 11
+      },
+      {
+        "date": "2026-07-31",
+        "tokens": 384522,
+        "byModel": {
+          "codex-auto-review": 118073,
+          "gpt-5.6-sol": 266449
+        },
+        "messages": 81,
+        "sessions": 5
       }
     ],
     "hourCounts": {
