@@ -84,7 +84,14 @@ def _local_date_hour(ts) -> tuple[str, int]:
 
 
 def _claude_transcripts(projects_dir: str) -> list[str]:
-    """Mirror of the app's `gKr`: project/*.jsonl + project/<session>/subagents/agent-*.jsonl.
+    """project/*.jsonl + every agent-*.jsonl anywhere under project/<session>/subagents/.
+
+    Deliberately WIDER than the app's `gKr`, which only reads agent transcripts sitting
+    directly in subagents/. Workflow fleets nest one level deeper —
+    subagents/workflows/<wf_id>/agent-*.jsonl — so the app's own /stats silently drops
+    them; on a workflow-heavy machine that is a third to a half of all burn. We walk the
+    whole subagents/ subtree instead. These land in the subagent bucket (`is_sub` keys off
+    the /subagents/ path segment), so the dashboard can still toggle them off.
 
     Sorted for deterministic output; unreadable subtrees are skipped, not fatal.
     """
@@ -106,15 +113,12 @@ def _claude_transcripts(projects_dir: str) -> list[str]:
             if os.path.isfile(full) and name.endswith(".jsonl"):
                 files.append(full)
             elif os.path.isdir(full):
-                sub = os.path.join(full, "subagents")
-                try:
-                    subs = os.listdir(sub)
-                except OSError:
-                    continue
-                files += [
-                    os.path.join(sub, x) for x in subs
-                    if x.endswith(".jsonl") and x.startswith("agent-")
-                ]
+                # os.walk over a missing/unreadable dir yields nothing, so no guard needed.
+                for root, _dirs, subs in os.walk(os.path.join(full, "subagents")):
+                    files += [
+                        os.path.join(root, x) for x in subs
+                        if x.endswith(".jsonl") and x.startswith("agent-")
+                    ]
     return sorted(files)
 
 
