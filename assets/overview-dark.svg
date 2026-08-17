@@ -7,10 +7,10 @@
 <line x1="30" y1="64" x2="690" y2="64" stroke="#ffffff" stroke-width="2"/>
 <text x="30.0" y="116.0" font-size="54" fill="#ff7b29" font-weight="800">1.6B</text>
 <text x="168.0" y="116.0" font-size="20" fill="#aaaaaa" font-weight="600">TOKENS</text>
-<text x="32.0" y="140.0" font-size="12.5" fill="#aaaaaa">1,639,672,220 tokens burned since Mar 29, 2026</text>
+<text x="32.0" y="140.0" font-size="12.5" fill="#aaaaaa">1,639,770,355 tokens burned since Mar 29, 2026</text>
 <text x="30.0" y="168.0" font-size="20" fill="#ffffff" font-weight="700">770</text>
 <text x="30.0" y="184.0" font-size="10.5" fill="#aaaaaa">SESSIONS</text>
-<text x="140.0" y="168.0" font-size="20" fill="#ffffff" font-weight="700">305,263</text>
+<text x="140.0" y="168.0" font-size="20" fill="#ffffff" font-weight="700">305,377</text>
 <text x="140.0" y="184.0" font-size="10.5" fill="#aaaaaa">MESSAGES</text>
 <line x1="128.0" y1="152" x2="128.0" y2="186" stroke="#ffffff" stroke-width="2" opacity="0.7"/>
 <text x="250.0" y="168.0" font-size="20" fill="#ffffff" font-weight="700">119</text>
