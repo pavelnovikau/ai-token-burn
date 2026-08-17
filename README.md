@@ -81,10 +81,13 @@ app silently drops).
 python3 collect.py                 # -> data/stats.json (Claude + Codex), accumulating
 python3 collect.py --fresh         # full recompute, ignore the prior snapshot
 python3 render_hero.py             # -> assets/overview-{light,dark}.svg
-./tools/publish.sh                 # collect -> render -> commit + push (DRY_RUN=1 to preview)
+./tools/publish.sh                 # collect -> render -> commit locally (DRY_RUN=1 to preview)
+PUSH=1 ./tools/publish.sh          # ... and publish to origin/master
 ```
 
 A launchd agent (`tools/com.turbokach.aitokenburn.plist`) runs `publish.sh` daily.
+The daily run **commits locally and does not push** — it exists so accumulation keeps
+running inside the retention window; publishing is the explicit `PUSH=1` run.
 
 ## Themes
 

@@ -1,10 +1,15 @@
 #!/usr/bin/env bash
 # Daily token-burn refresh: recompute stats from local logs, re-render the hero
-# SVGs, and commit + push if anything changed. Run by the launchd agent
-# (com.turbokach.aitokenburn) once a day; safe to run by hand too.
+# SVGs, and commit locally if anything changed. Run by the launchd agent
+# (com.pavelnovikau.aitokenburn) once a day; safe to run by hand too.
 #
-#   ./tools/publish.sh            # refresh, commit, push
-#   DRY_RUN=1 ./tools/publish.sh  # refresh + show what WOULD be committed, no push
+# Publishing is OPT-IN. By default the daily job only keeps the local snapshot
+# growing — accumulate.py needs a run inside every retention window or pruned days
+# are lost forever — and nothing leaves the machine until PUSH=1 is passed.
+#
+#   ./tools/publish.sh            # refresh + commit locally, no push
+#   PUSH=1 ./tools/publish.sh     # ... and publish to origin/master
+#   DRY_RUN=1 ./tools/publish.sh  # refresh + show what WOULD be committed, no commit
 set -euo pipefail
 
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -28,7 +33,7 @@ if git diff --quiet HEAD -- "${FILES[@]}"; then
 fi
 
 if [[ "${DRY_RUN:-0}" == "1" ]]; then
-  echo "publish: [dry-run] would commit + push:"
+  echo "publish: [dry-run] would commit:"
   git status --porcelain -- "${FILES[@]}"
   exit 0
 fi
@@ -36,5 +41,10 @@ fi
 # Pathspec commit: commits ONLY these files' current contents, ignoring whatever
 # else may be staged in the index — so the daily job never ships unrelated work.
 git commit -m "chore: daily token-burn refresh ($(date +%Y-%m-%d))" -- "${FILES[@]}"
+
+if [[ "${PUSH:-0}" != "1" ]]; then
+  echo "publish: committed locally — NOT pushed (PUSH=1 to publish)"
+  exit 0
+fi
 git push origin master
 echo "publish: pushed daily refresh"
