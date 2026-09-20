@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-09-19T08:07:48Z",
+  "generatedAt": "2026-09-20T08:00:05Z",
   "tzOffsetMinutes": 120,
   "claude": {
     "tool": "claude",
     "overview": {
-      "sessions": 484,
-      "messages": 436085,
-      "totalTokens": 711281559,
-      "activeDays": 137,
+      "sessions": 487,
+      "messages": 440150,
+      "totalTokens": 713904709,
+      "activeDays": 138,
       "peakHour": 11,
       "favoriteModel": "claude-opus-4-8",
       "firstSessionDate": "2026-05-04T08:24:50.499Z",
-      "lastSessionDate": "2026-09-17T01:25:14.244Z",
-      "currentStreak": 62,
+      "lastSessionDate": "2026-09-19T21:17:10.642Z",
+      "currentStreak": 63,
       "longestStreak": 75
     },
     "models": [
@@ -23,16 +23,16 @@
         "cacheRead": 33667685991,
         "cacheCreation": 1084333825,
         "total": 277527824,
-        "pct": 39.0
+        "pct": 38.9
       },
       {
         "model": "claude-opus-5",
-        "in": 791892,
-        "out": 186230855,
-        "cacheRead": 64162081190,
-        "cacheCreation": 1490494078,
-        "total": 187022747,
-        "pct": 26.3
+        "in": 797160,
+        "out": 188848737,
+        "cacheRead": 65387139189,
+        "cacheCreation": 1496163753,
+        "total": 189645897,
+        "pct": 26.6
       },
       {
         "model": "claude-opus-4-7",
@@ -59,7 +59,7 @@
         "cacheRead": 10646656101,
         "cacheCreation": 521381354,
         "total": 51008234,
-        "pct": 7.2
+        "pct": 7.1
       },
       {
         "model": "claude-fable-5",
@@ -1951,6 +1951,18 @@
         "subTokens": 265398,
         "subMessages": 719,
         "subSessions": 5
+      },
+      {
+        "date": "2026-09-19",
+        "tokens": 2623150,
+        "byModel": {
+          "claude-opus-5": 2623150
+        },
+        "messages": 4065,
+        "sessions": 3,
+        "subTokens": 0,
+        "subMessages": 0,
+        "subSessions": 0
       }
     ],
     "hourCounts": {
@@ -1966,14 +1978,14 @@
       "15": 13,
       "16": 16,
       "17": 24,
-      "18": 8,
+      "18": 9,
       "19": 20,
       "20": 8,
       "21": 7,
       "22": 9,
       "6": 9,
       "5": 1,
-      "23": 11,
+      "23": 13,
       "1": 16,
       "2": 1,
       "3": 12
