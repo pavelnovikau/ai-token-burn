@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-10-30T09:00:04Z",
+  "generatedAt": "2026-10-31T09:00:04Z",
   "tzOffsetMinutes": 60,
   "claude": {
     "tool": "claude",
     "overview": {
-      "sessions": 1173,
-      "messages": 876891,
-      "totalTokens": 1007268409,
-      "activeDays": 178,
+      "sessions": 1187,
+      "messages": 896811,
+      "totalTokens": 1027478790,
+      "activeDays": 179,
       "peakHour": 10,
       "favoriteModel": "claude-opus-4-8",
       "firstSessionDate": "2026-05-04T08:24:50.499Z",
-      "lastSessionDate": "2026-10-30T08:39:08.061Z",
-      "currentStreak": 19,
+      "lastSessionDate": "2026-10-31T08:39:11.532Z",
+      "currentStreak": 20,
       "longestStreak": 84
     },
     "models": [
@@ -23,7 +23,7 @@
         "cacheRead": 33667685991,
         "cacheCreation": 1084333825,
         "total": 277527824,
-        "pct": 27.6
+        "pct": 27.0
       },
       {
         "model": "claude-opus-5",
@@ -32,25 +32,25 @@
         "cacheRead": 72373471553,
         "cacheCreation": 1552188281,
         "total": 203891164,
-        "pct": 20.2
+        "pct": 19.8
       },
       {
         "model": "claude-opus-5-5",
-        "in": 473352,
-        "out": 178801358,
-        "cacheRead": 53526822437,
-        "cacheCreation": 1105433254,
-        "total": 179274710,
-        "pct": 17.8
+        "in": 506148,
+        "out": 193680103,
+        "cacheRead": 57558973683,
+        "cacheCreation": 1262011938,
+        "total": 194186251,
+        "pct": 18.9
       },
       {
         "model": "claude-sonnet-5-5",
-        "in": 208790,
-        "out": 91521259,
-        "cacheRead": 15500765375,
-        "cacheCreation": 822428766,
-        "total": 91730049,
-        "pct": 9.1
+        "in": 221944,
+        "out": 94920653,
+        "cacheRead": 16533941880,
+        "cacheCreation": 898238441,
+        "total": 95142597,
+        "pct": 9.3
       },
       {
         "model": "claude-opus-4-7",
@@ -59,7 +59,7 @@
         "cacheRead": 11173842718,
         "cacheCreation": 700765095,
         "total": 69855203,
-        "pct": 6.9
+        "pct": 6.8
       },
       {
         "model": "claude-sonnet-4-6",
@@ -68,15 +68,15 @@
         "cacheRead": 5406403185,
         "cacheCreation": 544658458,
         "total": 64643698,
-        "pct": 6.4
+        "pct": 6.3
       },
       {
         "model": "claude-sonnet-5",
         "in": 6573626,
         "out": 48308815,
         "cacheRead": 14048459496,
-        "cacheCreation": 780268811,
-        "total": 59005472,
+        "cacheCreation": 792893732,
+        "total": 60775328,
         "pct": 5.9
       },
       {
@@ -95,15 +95,15 @@
         "cacheRead": 92758976,
         "cacheCreation": 0,
         "total": 13841615,
-        "pct": 1.4
+        "pct": 1.3
       },
       {
         "model": "claude-fable-5-1",
-        "in": 79662,
-        "out": 5621650,
-        "cacheRead": 1085948881,
-        "cacheCreation": 47008561,
-        "total": 5701312,
+        "in": 82772,
+        "out": 5734976,
+        "cacheRead": 1107256152,
+        "cacheCreation": 51192640,
+        "total": 5817748,
         "pct": 0.6
       },
       {
@@ -2011,138 +2011,138 @@
       },
       {
         "date": "2026-09-22",
-        "tokens": 13494564,
+        "tokens": 23382869,
         "byModel": {
-          "claude-sonnet-5": 1560516,
-          "claude-opus-5-5": 11148807,
+          "claude-opus-5-5": 20977485,
+          "claude-sonnet-5": 1620143,
           "claude-opus-5": 785241
         },
-        "messages": 16464,
-        "sessions": 3,
-        "subTokens": 2919408,
-        "subMessages": 10983,
-        "subSessions": 136
+        "messages": 31962,
+        "sessions": 4,
+        "subTokens": 3222518,
+        "subMessages": 12389,
+        "subSessions": 152
       },
       {
         "date": "2026-09-23",
-        "tokens": 3780839,
+        "tokens": 4894183,
         "byModel": {
-          "claude-opus-5-5": 1518155,
-          "claude-sonnet-5": 2146248,
-          "claude-fable-5-1": 116436
+          "claude-sonnet-5": 2757291,
+          "claude-opus-5-5": 1904020,
+          "claude-fable-5-1": 232872
         },
         "messages": 765,
         "sessions": 1,
-        "subTokens": 3354161,
-        "subMessages": 10824,
-        "subSessions": 117
+        "subTokens": 4467505,
+        "subMessages": 15077,
+        "subSessions": 162
       },
       {
         "date": "2026-09-24",
-        "tokens": 2479606,
+        "tokens": 2955316,
         "byModel": {
-          "claude-sonnet-5": 1202550,
-          "claude-opus-5-5": 1277056
+          "claude-opus-5-5": 1375821,
+          "claude-sonnet-5": 1579495
         },
         "messages": 0,
         "sessions": 0,
-        "subTokens": 2479606,
-        "subMessages": 7440,
-        "subSessions": 83
+        "subTokens": 2955316,
+        "subMessages": 9056,
+        "subSessions": 99
       },
       {
         "date": "2026-09-25",
-        "tokens": 2645001,
+        "tokens": 2952964,
         "byModel": {
-          "claude-sonnet-5": 833009,
+          "claude-sonnet-5": 1140972,
           "claude-opus-5-5": 1811992
         },
         "messages": 76,
         "sessions": 1,
-        "subTokens": 2619934,
-        "subMessages": 8466,
-        "subSessions": 75
+        "subTokens": 2927897,
+        "subMessages": 9956,
+        "subSessions": 88
       },
       {
         "date": "2026-09-26",
-        "tokens": 24871205,
+        "tokens": 24972965,
         "byModel": {
-          "claude-opus-5-5": 20010622,
-          "claude-sonnet-5": 1271854,
+          "claude-opus-5-5": 20057924,
+          "claude-sonnet-5": 1326312,
           "claude-sonnet-5-5": 3588729
         },
         "messages": 46284,
         "sessions": 3,
-        "subTokens": 3717467,
-        "subMessages": 12063,
-        "subSessions": 123
+        "subTokens": 3819227,
+        "subMessages": 12371,
+        "subSessions": 127
       },
       {
         "date": "2026-09-27",
-        "tokens": 20433069,
+        "tokens": 20663925,
         "byModel": {
           "claude-opus-5-5": 18631715,
-          "claude-sonnet-5": 466694,
+          "claude-sonnet-5": 697550,
           "claude-sonnet-5-5": 1334660
         },
         "messages": 39463,
         "sessions": 3,
-        "subTokens": 707775,
-        "subMessages": 4098,
-        "subSessions": 26
+        "subTokens": 938631,
+        "subMessages": 4908,
+        "subSessions": 35
       },
       {
         "date": "2026-09-28",
-        "tokens": 8071564,
+        "tokens": 8921173,
         "byModel": {
-          "claude-sonnet-5": 269943,
-          "claude-opus-5-5": 7381014,
-          "claude-sonnet-5-5": 420607
+          "claude-sonnet-5": 398907,
+          "claude-opus-5-5": 7698419,
+          "claude-sonnet-5-5": 823847
         },
         "messages": 16340,
         "sessions": 1,
-        "subTokens": 1114057,
-        "subMessages": 12142,
-        "subSessions": 114
+        "subTokens": 1963666,
+        "subMessages": 14261,
+        "subSessions": 127
       },
       {
         "date": "2026-09-29",
-        "tokens": 4569346,
+        "tokens": 5368814,
         "byModel": {
-          "claude-sonnet-5-5": 3272556,
-          "claude-opus-5-5": 1296790
+          "claude-sonnet-5-5": 3711121,
+          "claude-opus-5-5": 1657693
         },
         "messages": 297,
         "sessions": 2,
-        "subTokens": 4280160,
-        "subMessages": 18141,
-        "subSessions": 143
+        "subTokens": 5079628,
+        "subMessages": 19895,
+        "subSessions": 162
       },
       {
         "date": "2026-09-30",
-        "tokens": 2594457,
+        "tokens": 2610612,
         "byModel": {
-          "claude-opus-5-5": 565354,
-          "claude-sonnet-5-5": 2029103
+          "claude-sonnet-5-5": 2045258,
+          "claude-opus-5-5": 565354
         },
         "messages": 715,
         "sessions": 5,
-        "subTokens": 2103926,
-        "subMessages": 5390,
-        "subSessions": 45
+        "subTokens": 2120081,
+        "subMessages": 5489,
+        "subSessions": 46
       },
       {
         "date": "2026-10-01",
-        "tokens": 1931721,
+        "tokens": 2030327,
         "byModel": {
-          "claude-sonnet-5-5": 1620305,
-          "claude-opus-5-5": 311416
+          "claude-sonnet-5-5": 1706602,
+          "claude-opus-5-5": 323725
         },
         "messages": 76,
         "sessions": 4,
-        "subTokens": 1882764,
-        "subMessages": 4004,
-        "subSessions": 43
+        "subTokens": 1981370,
+        "subMessages": 4363,
+        "subSessions": 49
       },
       {
         "date": "2026-10-02",
@@ -2237,16 +2237,16 @@
       },
       {
         "date": "2026-10-09",
-        "tokens": 9088457,
+        "tokens": 9407307,
         "byModel": {
-          "claude-sonnet-5-5": 9048085,
+          "claude-sonnet-5-5": 9366935,
           "claude-opus-5-5": 40372
         },
         "messages": 5028,
         "sessions": 9,
-        "subTokens": 3904765,
-        "subMessages": 15717,
-        "subSessions": 70
+        "subTokens": 4223615,
+        "subMessages": 16962,
+        "subSessions": 79
       },
       {
         "date": "2026-10-10",
@@ -2263,55 +2263,55 @@
       },
       {
         "date": "2026-10-12",
-        "tokens": 5831551,
+        "tokens": 6038628,
         "byModel": {
-          "claude-sonnet-5-5": 854936,
-          "claude-opus-5-5": 4976615
+          "claude-opus-5-5": 5119930,
+          "claude-sonnet-5-5": 918698
         },
         "messages": 10157,
         "sessions": 23,
-        "subTokens": 1098266,
-        "subMessages": 5290,
-        "subSessions": 50
+        "subTokens": 1305343,
+        "subMessages": 5899,
+        "subSessions": 58
       },
       {
         "date": "2026-10-13",
-        "tokens": 17223036,
+        "tokens": 17895814,
         "byModel": {
-          "claude-sonnet-5-5": 2995213,
-          "claude-opus-5-5": 14227823
+          "claude-sonnet-5-5": 3584517,
+          "claude-opus-5-5": 14311297
         },
         "messages": 32039,
         "sessions": 15,
-        "subTokens": 1354563,
-        "subMessages": 8336,
-        "subSessions": 68
+        "subTokens": 2027341,
+        "subMessages": 10859,
+        "subSessions": 89
       },
       {
         "date": "2026-10-14",
-        "tokens": 2850923,
+        "tokens": 3452412,
         "byModel": {
-          "claude-sonnet-5-5": 424144,
-          "claude-opus-5-5": 2426779
+          "claude-sonnet-5-5": 473327,
+          "claude-opus-5-5": 2979085
         },
         "messages": 2138,
         "sessions": 15,
-        "subTokens": 1277226,
-        "subMessages": 3816,
-        "subSessions": 40
+        "subTokens": 1878715,
+        "subMessages": 5137,
+        "subSessions": 50
       },
       {
         "date": "2026-10-15",
-        "tokens": 7532760,
+        "tokens": 8349471,
         "byModel": {
-          "claude-sonnet-5-5": 871785,
-          "claude-opus-5-5": 6660975
+          "claude-sonnet-5-5": 1461468,
+          "claude-opus-5-5": 6888003
         },
         "messages": 10063,
         "sessions": 26,
-        "subTokens": 1479771,
-        "subMessages": 5358,
-        "subSessions": 41
+        "subTokens": 2296482,
+        "subMessages": 7969,
+        "subSessions": 51
       },
       {
         "date": "2026-10-16",
@@ -2354,29 +2354,29 @@
       },
       {
         "date": "2026-10-19",
-        "tokens": 9193285,
+        "tokens": 9208479,
         "byModel": {
-          "claude-sonnet-5-5": 15993,
+          "claude-sonnet-5-5": 31187,
           "claude-opus-5-5": 9177292
         },
         "messages": 17402,
         "sessions": 52,
-        "subTokens": 15194,
-        "subMessages": 63,
-        "subSessions": 3
+        "subTokens": 30388,
+        "subMessages": 126,
+        "subSessions": 6
       },
       {
         "date": "2026-10-20",
-        "tokens": 9203755,
+        "tokens": 9629064,
         "byModel": {
-          "claude-sonnet-5-5": 126668,
-          "claude-opus-5-5": 9077087
+          "claude-sonnet-5-5": 141412,
+          "claude-opus-5-5": 9487652
         },
-        "messages": 24425,
+        "messages": 25049,
         "sessions": 149,
-        "subTokens": 184718,
-        "subMessages": 802,
-        "subSessions": 17
+        "subTokens": 199462,
+        "subMessages": 856,
+        "subSessions": 20
       },
       {
         "date": "2026-10-21",
@@ -2393,42 +2393,42 @@
       },
       {
         "date": "2026-10-22",
-        "tokens": 328756,
+        "tokens": 365316,
         "byModel": {
-          "claude-sonnet-5-5": 157952,
+          "claude-sonnet-5-5": 194512,
           "claude-opus-5-5": 170804
         },
         "messages": 207,
         "sessions": 10,
-        "subTokens": 216171,
-        "subMessages": 900,
-        "subSessions": 20
+        "subTokens": 252731,
+        "subMessages": 1039,
+        "subSessions": 24
       },
       {
         "date": "2026-10-23",
-        "tokens": 1696025,
+        "tokens": 1731643,
         "byModel": {
           "claude-opus-5-5": 171783,
-          "claude-sonnet-5-5": 1524242
+          "claude-sonnet-5-5": 1559860
         },
         "messages": 179,
         "sessions": 8,
-        "subTokens": 1620135,
-        "subMessages": 2210,
-        "subSessions": 23
+        "subTokens": 1655753,
+        "subMessages": 2277,
+        "subSessions": 24
       },
       {
         "date": "2026-10-24",
-        "tokens": 11083868,
+        "tokens": 11513293,
         "byModel": {
-          "claude-sonnet-5-5": 930215,
-          "claude-opus-5-5": 10153653
+          "claude-sonnet-5-5": 1071108,
+          "claude-opus-5-5": 10442185
         },
-        "messages": 17976,
+        "messages": 18710,
         "sessions": 30,
-        "subTokens": 767328,
-        "subMessages": 1305,
-        "subSessions": 22
+        "subTokens": 908221,
+        "subMessages": 1608,
+        "subSessions": 28
       },
       {
         "date": "2026-10-25",
@@ -2445,16 +2445,16 @@
       },
       {
         "date": "2026-10-26",
-        "tokens": 4097291,
+        "tokens": 4148987,
         "byModel": {
-          "claude-sonnet-5-5": 566177,
+          "claude-sonnet-5-5": 617873,
           "claude-opus-5-5": 3531114
         },
         "messages": 3512,
         "sessions": 21,
-        "subTokens": 718983,
-        "subMessages": 920,
-        "subSessions": 25
+        "subTokens": 770679,
+        "subMessages": 1038,
+        "subSessions": 26
       },
       {
         "date": "2026-10-27",
@@ -2484,12 +2484,12 @@
       },
       {
         "date": "2026-10-29",
-        "tokens": 8441989,
+        "tokens": 8446752,
         "byModel": {
-          "claude-opus-5-5": 7843035,
+          "claude-opus-5-5": 7847798,
           "claude-sonnet-5-5": 598954
         },
-        "messages": 16811,
+        "messages": 16822,
         "sessions": 32,
         "subTokens": 1169497,
         "subMessages": 1147,
@@ -2497,37 +2497,50 @@
       },
       {
         "date": "2026-10-30",
-        "tokens": 3803200,
+        "tokens": 5976075,
         "byModel": {
-          "claude-opus-5-5": 332766,
-          "claude-sonnet-5-5": 3470434
+          "claude-opus-5-5": 2292522,
+          "claude-sonnet-5-5": 3683553
         },
-        "messages": 161,
-        "sessions": 6,
-        "subTokens": 3731182,
-        "subMessages": 2842,
-        "subSessions": 31
+        "messages": 3066,
+        "sessions": 14,
+        "subTokens": 4138417,
+        "subMessages": 3370,
+        "subSessions": 34
+      },
+      {
+        "date": "2026-10-31",
+        "tokens": 540260,
+        "byModel": {
+          "claude-opus-5-5": 190575,
+          "claude-sonnet-5-5": 349685
+        },
+        "messages": 148,
+        "sessions": 5,
+        "subTokens": 426757,
+        "subMessages": 546,
+        "subSessions": 14
       }
     ],
     "hourCounts": {
       "0": 25,
-      "7": 53,
+      "7": 55,
       "8": 28,
-      "9": 65,
-      "10": 88,
+      "9": 67,
+      "10": 90,
       "11": 56,
       "12": 25,
       "13": 26,
       "14": 37,
       "15": 28,
       "16": 30,
-      "17": 38,
+      "17": 39,
       "18": 37,
-      "19": 25,
-      "20": 43,
-      "21": 45,
+      "19": 26,
+      "20": 46,
+      "21": 46,
       "22": 36,
-      "6": 29,
+      "6": 30,
       "5": 3,
       "23": 63,
       "1": 20,
@@ -2537,7 +2550,7 @@
     },
     "subagents": {
       "sessions": 3960,
-      "messages": 392880,
+      "messages": 408811,
       "totalTokens": 134924138,
       "models": [
         {
@@ -2553,8 +2566,8 @@
           "model": "claude-sonnet-5",
           "in": 4385899,
           "out": 46093743,
-          "cacheRead": 13159360162,
-          "cacheCreation": 771678759,
+          "cacheRead": 13336831667,
+          "cacheCreation": 792852018,
           "total": 47190974,
           "pct": 35.0
         },
@@ -2578,12 +2591,12 @@
         },
         {
           "model": "claude-sonnet-5-5",
-          "in": 93196,
-          "out": 24874100,
-          "cacheRead": 6919370051,
-          "cacheCreation": 506563719,
-          "total": 24967296,
-          "pct": 18.5
+          "in": 106350,
+          "out": 28273494,
+          "cacheRead": 7952546556,
+          "cacheCreation": 582373394,
+          "total": 28379844,
+          "pct": 21.0
         },
         {
           "model": "claude-opus-4-7",
@@ -2596,12 +2609,12 @@
         },
         {
           "model": "claude-opus-5-5",
-          "in": 56304,
-          "out": 16402279,
-          "cacheRead": 4569333108,
-          "cacheCreation": 232570383,
-          "total": 16458583,
-          "pct": 12.2
+          "in": 63406,
+          "out": 19138520,
+          "cacheRead": 5227502982,
+          "cacheCreation": 266714647,
+          "total": 19201926,
+          "pct": 14.2
         },
         {
           "model": "claude-fable-5",
@@ -2623,12 +2636,12 @@
         },
         {
           "model": "claude-fable-5-1",
-          "in": 3114,
-          "out": 128656,
-          "cacheRead": 21307271,
-          "cacheCreation": 4457889,
-          "total": 131770,
-          "pct": 0.1
+          "in": 6224,
+          "out": 241982,
+          "cacheRead": 42614542,
+          "cacheCreation": 8641968,
+          "total": 248206,
+          "pct": 0.2
         }
       ]
     }
