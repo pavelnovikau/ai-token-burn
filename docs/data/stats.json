@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-11-05T09:00:02Z",
+  "generatedAt": "2026-11-06T09:00:05Z",
   "tzOffsetMinutes": 60,
   "claude": {
     "tool": "claude",
     "overview": {
-      "sessions": 1284,
-      "messages": 937723,
-      "totalTokens": 1070488624,
-      "activeDays": 183,
+      "sessions": 1311,
+      "messages": 951546,
+      "totalTokens": 1078712686,
+      "activeDays": 185,
       "peakHour": 10,
       "favoriteModel": "claude-opus-4-8",
       "firstSessionDate": "2026-05-04T08:24:50.499Z",
-      "lastSessionDate": "2026-11-04T22:05:47.630Z",
-      "currentStreak": 24,
+      "lastSessionDate": "2026-11-06T07:57:46.115Z",
+      "currentStreak": 26,
       "longestStreak": 84
     },
     "models": [
@@ -23,16 +23,16 @@
         "cacheRead": 33667685991,
         "cacheCreation": 1084333825,
         "total": 277527824,
-        "pct": 25.9
+        "pct": 25.7
       },
       {
         "model": "claude-opus-5-5",
-        "in": 1112920,
-        "out": 234559182,
-        "cacheRead": 61659200257,
-        "cacheCreation": 1471966672,
-        "total": 235672102,
-        "pct": 22.0
+        "in": 1131774,
+        "out": 242329147,
+        "cacheRead": 62997889051,
+        "cacheCreation": 1516481974,
+        "total": 243460921,
+        "pct": 22.6
       },
       {
         "model": "claude-opus-5",
@@ -41,15 +41,15 @@
         "cacheRead": 72373471553,
         "cacheCreation": 1552188281,
         "total": 203891164,
-        "pct": 19.0
+        "pct": 18.9
       },
       {
         "model": "claude-sonnet-5-5",
-        "in": 224696,
-        "out": 96441216,
-        "cacheRead": 16697983241,
-        "cacheCreation": 920285737,
-        "total": 96665912,
+        "in": 225450,
+        "out": 96875705,
+        "cacheRead": 16748535939,
+        "cacheCreation": 925986495,
+        "total": 97101155,
         "pct": 9.0
       },
       {
@@ -77,7 +77,7 @@
         "cacheRead": 14048459496,
         "cacheCreation": 792893732,
         "total": 60775328,
-        "pct": 5.7
+        "pct": 5.6
       },
       {
         "model": "claude-fable-5",
@@ -2376,12 +2376,12 @@
       },
       {
         "date": "2026-10-20",
-        "tokens": 11459775,
+        "tokens": 12728775,
         "byModel": {
           "claude-sonnet-5-5": 141412,
-          "claude-opus-5-5": 11318363
+          "claude-opus-5-5": 12587363
         },
-        "messages": 28537,
+        "messages": 31827,
         "sessions": 149,
         "subTokens": 199462,
         "subMessages": 856,
@@ -2582,38 +2582,63 @@
         "subTokens": 445293,
         "subMessages": 601,
         "subSessions": 14
+      },
+      {
+        "date": "2026-11-05",
+        "tokens": 3404061,
+        "byModel": {
+          "claude-opus-5-5": 3404061
+        },
+        "messages": 5245,
+        "sessions": 10,
+        "subTokens": 0,
+        "subMessages": 0,
+        "subSessions": 0
+      },
+      {
+        "date": "2026-11-06",
+        "tokens": 3551001,
+        "byModel": {
+          "claude-opus-5-5": 3115758,
+          "claude-sonnet-5-5": 435243
+        },
+        "messages": 5288,
+        "sessions": 17,
+        "subTokens": 536560,
+        "subMessages": 716,
+        "subSessions": 15
       }
     ],
     "hourCounts": {
-      "0": 26,
-      "7": 60,
-      "8": 29,
+      "0": 30,
+      "7": 61,
+      "8": 32,
       "9": 69,
-      "10": 97,
+      "10": 98,
       "11": 57,
       "12": 27,
       "13": 26,
       "14": 57,
-      "15": 31,
+      "15": 32,
       "16": 30,
       "17": 39,
       "18": 41,
-      "19": 28,
-      "20": 51,
-      "21": 52,
-      "22": 48,
+      "19": 30,
+      "20": 52,
+      "21": 53,
+      "22": 49,
       "6": 31,
-      "5": 3,
-      "23": 66,
+      "5": 4,
+      "23": 68,
       "1": 29,
-      "2": 34,
-      "3": 20,
-      "4": 14
+      "2": 38,
+      "3": 22,
+      "4": 16
     },
     "subagents": {
-      "sessions": 3960,
-      "messages": 410316,
-      "totalTokens": 135549137,
+      "sessions": 3974,
+      "messages": 411032,
+      "totalTokens": 136085697,
       "models": [
         {
           "model": "claude-opus-4-8",
@@ -2622,7 +2647,7 @@
           "cacheRead": 4099340399,
           "cacheCreation": 375060441,
           "total": 68179763,
-          "pct": 50.3
+          "pct": 50.1
         },
         {
           "model": "claude-sonnet-5",
@@ -2631,7 +2656,7 @@
           "cacheRead": 13336831667,
           "cacheCreation": 792852018,
           "total": 47190974,
-          "pct": 34.8
+          "pct": 34.7
         },
         {
           "model": "claude-opus-5",
@@ -2640,7 +2665,7 @@
           "cacheRead": 10379796111,
           "cacheCreation": 416405234,
           "total": 38130122,
-          "pct": 28.1
+          "pct": 28.0
         },
         {
           "model": "claude-sonnet-4-6",
@@ -2649,16 +2674,16 @@
           "cacheRead": 3975875384,
           "cacheCreation": 443012027,
           "total": 31568556,
-          "pct": 23.3
+          "pct": 23.2
         },
         {
           "model": "claude-sonnet-5-5",
-          "in": 108864,
-          "out": 29711849,
-          "cacheRead": 8104657894,
-          "cacheCreation": 601617327,
-          "total": 29820713,
-          "pct": 22.0
+          "in": 109618,
+          "out": 30146338,
+          "cacheRead": 8155210592,
+          "cacheCreation": 607318085,
+          "total": 30255956,
+          "pct": 22.2
         },
         {
           "model": "claude-opus-4-7",
@@ -2667,15 +2692,15 @@
           "cacheRead": 2587042743,
           "cacheCreation": 420396918,
           "total": 21102298,
-          "pct": 15.6
+          "pct": 15.5
         },
         {
           "model": "claude-opus-5-5",
-          "in": 64628,
-          "out": 20103299,
-          "cacheRead": 5311099113,
-          "cacheCreation": 276645015,
-          "total": 20167927,
+          "in": 64708,
+          "out": 20204536,
+          "cacheRead": 5316877280,
+          "cacheCreation": 277487001,
+          "total": 20269244,
           "pct": 14.9
         },
         {
